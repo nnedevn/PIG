@@ -5,12 +5,18 @@ function initialize(){
 	console.log('initializing');
 	let dictionary = store_data();
 
-	console.log(experiment(dictionary));
-
+	let gameData = experiment(dictionary);
+	let results = calculateRatio(gameData)
+	renderResults(results);
 
 
 }
 
+
+function renderResults(results){
+	document.querySelector("#playerOneStats").innerHTML = results[0]
+	document.querySelector("#playerTwoStats").innerHTML = results[1]
+}
 
 
 function store_data(){
@@ -39,7 +45,7 @@ function player_strat_turn(hand_limit, iterations_limit){
 		}
 		else{
 			hand = 0;
-			return
+			return hand 
 		}
 		iterations += 1;
 	}
@@ -55,22 +61,39 @@ function trial(dictionary){
 		bank1+= player_strat_turn(dictionary.hand_limit_1, dictionary.roll_limit_1)
 		bank2+= player_strat_turn(dictionary.hand_limit_2, dictionary.roll_limit_2)
 	}
-	if (bank1<bank2){
-		return player_one
+	if (bank1<=bank2){
+		return player_one;
 	
 	}
 	else{
-		return player_two
+		return player_two;
 	}
 }
 
 function experiment(dictionary){
-	console.log('exoperimenting')
 	var data = []
 	for(let i = 1; i <= dictionary.num_of_trials; ++i){
-		console.log(i, "looping")
 		data.push(trial(dictionary))
 	}
 
 	return data;
+}
+
+function calculateRatio(data){
+	let results = []
+	var player1Wins = 0;
+	var player2Wins = 0;
+	var test = 0;
+
+	for(let i = 0; i< data.length; i++){
+
+		// test+=data[i][0]
+		player1Wins += data[i][0]
+		player2Wins += data[i][1]
+	}
+	results[0] = player1Wins/data.length
+	results[1] = player2Wins/data.length
+
+	return results;
+
 }
