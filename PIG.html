@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<TITLE> PIG </TITLE>
+</head>
+
+<BODY>
+	<h1> PIG</h1>
+
+	<h2> How the simulator works </h3>
+		Input numbers accordingly. Press simulate. 
+		
+	<div>
+
+	<h2> Inputs	</h2>
+	Winning Condition <input id="win_condition" type="number"/>
+	Number of Trials in Experiment <input id="num_of_trials" type="number"/>
+
+	<div>
+
+	<h3> Player 1 Strategy </h3>
+	Hand Limit <input id="hl1", type="number"/>
+	Roll Limit <input id="rl1", type="number"/>
+
+	<div>
+
+	<h3> Player 2 Strategy </h3>
+	Hand Limit <input id="hl2", type="number"/>
+	Roll Limit <input id="rl2", type="number"/>
+
+	<div>
+
+	<button type="button">Simulate!</button>
+
+	<script>
+
+		document.querySelector("button").addEventListener('click', logThis)
+		function logThis(){
+			let x = document.querySelector("#win_condition").value
+			console.log(x)
+		}
+
+	</script>
+
+</BODY>
