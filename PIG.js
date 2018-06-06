@@ -19,4 +19,3 @@ function player_strat_turn(hand_limit, iterations_limit){
 	return hand;
 }
 
-
