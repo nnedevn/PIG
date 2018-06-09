@@ -97,3 +97,35 @@ function calculateRatio(data){
 	return results;
 
 }
+
+function transpose(a) {
+    return Object.keys(a[0]).map(function(c) {
+        return a.map(function(r) { return r[c]; });
+    });
+}
+
+function cumSum(array){
+	var output = [];
+	var sum = 0;
+
+	for(var i in array){
+	  sum=sum+array[i];
+	  output.push(sum)
+	}
+	return output
+}
+
+function makePlottableArrays(results){
+	var resultsT= transpose(results);
+	var player1Wins = cumSum(resultsT[0]);
+	var player2Wins = cumSum(resultsT[1]);
+	var player1PlottableArray = [];
+	var player2PlottableArray = [];
+	console.log(player1Wins)
+	console.log(player2Wins)
+	for(let i = 0; i<results.length; i++){
+		player1PlottableArray.push([i,player1Wins[i]]);
+		player2PlottableArray.push([i,player2Wins[i]]);
+	}
+	return [player1PlottableArray, player2PlottableArray];
+}
