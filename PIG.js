@@ -136,9 +136,10 @@ function makePlottableArrays(results) {
 function drawChart(data) {
 	let dataPlayerOne = [1, 2, 3, 3, 3, 3, 4, 5, 6, 7, 7, 7, 7, 8 ];
 	let dataPlayerTwo = [0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 4, 5, 6, 6 ];
+	let maxWins = Math.max(...dataPlayerOne)>Math.max(...dataPlayerTwo) ? Math.max(...dataPlayerOne) : Math.max(...dataPlayerTwo); 
 
 	let dataLabel = [];
-	for (let i = 0; i < dataPlayerOne.length + 1; i+=1){
+	for (let i = 0; i <= dataPlayerOne.length; i+=1){
 		dataLabel.push(i + "");
 	}
 
@@ -189,7 +190,7 @@ function drawChart(data) {
 				yAxes: [{
 					display: true,
 					ticks:{
-						suggestedMax: 9
+						suggestedMax: maxWins + 1
 					},
 					scaleLabel: {
 						display: true,
@@ -199,6 +200,8 @@ function drawChart(data) {
 			}
 		}
   };
+
+	console.log(maxWins);
 
   let ctx = document.querySelector("#chart").getContext("2d");
   let simChart = new Chart(ctx, config);
