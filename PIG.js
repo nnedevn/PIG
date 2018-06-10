@@ -136,11 +136,12 @@ function drawChart(data) {
 	let dataPlayerOne = [1, 2, 3, 3, 3, 3, 4, 5, 6, 7, 7, 7, 7 ];
 	let dataPlayerTwo = [0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 4, 5, 6 ];
 
+
   let config = {
     // Type of chart
     type: "line",
     data: {
-      labels: ["1", "5", "10"],
+      labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11,", "12", "13", "14", "15"],
       datasets: [
         {
           label: "Player One Wins",
@@ -153,8 +154,7 @@ function drawChart(data) {
           label: "Player Two Wins",
           data: dataPlayerTwo,
           fill: false,
-          borderColor: "rgba(0, 0, 206, 1)",
-     
+          borderColor: "rgba(0, 0, 206, 1)",   
         }
       ]
 		},
