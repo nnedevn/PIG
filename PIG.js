@@ -5,7 +5,8 @@ function initialize() {
   let dictionary = store_data();
 
   let gameData = experiment(dictionary);
-  let results = calculateRatio(gameData);
+	let results = calculateRatio(gameData);
+	// makePlottableArrays(results);
   renderResults(results);
 
   drawChart();
@@ -29,7 +30,7 @@ function store_data() {
   return dictionary;
 }
 
-function player_strat_turn(hand_limit, iterations_limit) {
+function player_start_turn(hand_limit, iterations_limit) {
   var hand = 0;
   var iterations = 0;
 
@@ -55,11 +56,11 @@ function trial(dictionary) {
     bank1 <= dictionary.win_condition &&
     bank2 <= dictionary.win_condition
   ) {
-    bank1 += player_strat_turn(
+    bank1 += player_start_turn(
       dictionary.hand_limit_1,
       dictionary.roll_limit_1
     );
-    bank2 += player_strat_turn(
+    bank2 += player_start_turn(
       dictionary.hand_limit_2,
       dictionary.roll_limit_2
     );
@@ -118,7 +119,7 @@ function cumSum(array) {
 
 function makePlottableArrays(results) {
   var resultsT = transpose(results);
-  var player1Wins = cumSum(resultsT[0]);
+  var player1Wins = (resultsT[0]);
   var player2Wins = cumSum(resultsT[1]);
   var player1PlottableArray = [];
   var player2PlottableArray = [];
@@ -133,15 +134,20 @@ function makePlottableArrays(results) {
 }
 
 function drawChart(data) {
-	let dataPlayerOne = [1, 2, 3, 3, 3, 3, 4, 5, 6, 7, 7, 7, 7 ];
-	let dataPlayerTwo = [0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 4, 5, 6 ];
+	let dataPlayerOne = [1, 2, 3, 3, 3, 3, 4, 5, 6, 7, 7, 7, 7, 8 ];
+	let dataPlayerTwo = [0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 4, 5, 6, 6 ];
 
+	let dataLabel = [];
+	for (let i = 0; i < dataPlayerOne.length + 1; i+=1){
+		dataLabel.push(i + "");
+	}
 
   let config = {
     // Type of chart
     type: "line",
     data: {
-      labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11,", "12", "13", "14", "15"],
+			// labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11,", "12", "13", "14", "15"],
+			labels: dataLabel,
       datasets: [
         {
           label: "Player One Wins",
@@ -182,6 +188,9 @@ function drawChart(data) {
 				}],
 				yAxes: [{
 					display: true,
+					ticks:{
+						suggestedMax: 9
+					},
 					scaleLabel: {
 						display: true,
 						labelString: 'Wins'
