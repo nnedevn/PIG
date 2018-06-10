@@ -6,10 +6,9 @@ function initialize() {
 
   let gameData = experiment(dictionary);
   let results = calculateRatio(gameData);
-  // makePlottableArrays(results);
+  let plottableArray = makePlottableArrays(gameData);
   renderResults(results);
-
-  drawChart();
+  drawChart(plottableArray);
 }
 
 function renderResults(results) {
@@ -107,29 +106,24 @@ function transpose(a) {
 }
 
 function cumSum(array) {
-	return array.reduce((total, currentValue) => {return total + currentValue}, 0 )
-
+	output = []
+	output[0] = array[0]
+	for(let i = 0; i < array.length-1; i++){
+		output.push(array[i]+output[i])
+	}
+	return output 
 }
 
 function makePlottableArrays(results) {
   var resultsT = transpose(results);
-  var player1Wins = resultsT[0];
+  var player1Wins = cumSum(resultsT[0]);
   var player2Wins = cumSum(resultsT[1]);
-  var player1PlottableArray = [];
-  var player2PlottableArray = [];
-  console.log(player1Wins);
-  console.log(player2Wins);
-  for (let i = 0; i < results.length; i++) {
-    player1PlottableArray.push([i, player1Wins[i]]);
-    player2PlottableArray.push([i, player2Wins[i]]);
-  }
-  console.log(player1PlottableArray, player2PlottableArray);
-  return [player1PlottableArray, player2PlottableArray];
+  return [player1Wins, player2Wins];
 }
 
 function drawChart(data) {
-  let dataPlayerOne = [1, 2, 3, 3, 3, 3, 4, 5, 6, 7, 7, 7, 7, 8];
-  let dataPlayerTwo = [0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 4, 5, 6, 6];
+  let dataPlayerOne = data[0];
+  let dataPlayerTwo = data[1];
   let maxWins =
     Math.max(...dataPlayerOne) > Math.max(...dataPlayerTwo)
       ? Math.max(...dataPlayerOne)
