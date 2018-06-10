@@ -5,8 +5,8 @@ function initialize() {
   let dictionary = store_data();
 
   let gameData = experiment(dictionary);
-	let results = calculateRatio(gameData);
-	// makePlottableArrays(results);
+  let results = calculateRatio(gameData);
+  // makePlottableArrays(results);
   renderResults(results);
 
   drawChart();
@@ -107,19 +107,13 @@ function transpose(a) {
 }
 
 function cumSum(array) {
-  var output = [];
-  var sum = 0;
+	return array.reduce((total, currentValue) => {return total + currentValue}, 0 )
 
-  for (var i in array) {
-    sum = sum + array[i];
-    output.push(sum);
-  }
-  return output;
 }
 
 function makePlottableArrays(results) {
   var resultsT = transpose(results);
-  var player1Wins = (resultsT[0]);
+  var player1Wins = resultsT[0];
   var player2Wins = cumSum(resultsT[1]);
   var player1PlottableArray = [];
   var player2PlottableArray = [];
@@ -134,21 +128,24 @@ function makePlottableArrays(results) {
 }
 
 function drawChart(data) {
-	let dataPlayerOne = [1, 2, 3, 3, 3, 3, 4, 5, 6, 7, 7, 7, 7, 8 ];
-	let dataPlayerTwo = [0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 4, 5, 6, 6 ];
-	let maxWins = Math.max(...dataPlayerOne)>Math.max(...dataPlayerTwo) ? Math.max(...dataPlayerOne) : Math.max(...dataPlayerTwo); 
+  let dataPlayerOne = [1, 2, 3, 3, 3, 3, 4, 5, 6, 7, 7, 7, 7, 8];
+  let dataPlayerTwo = [0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 4, 5, 6, 6];
+  let maxWins =
+    Math.max(...dataPlayerOne) > Math.max(...dataPlayerTwo)
+      ? Math.max(...dataPlayerOne)
+      : Math.max(...dataPlayerTwo);
 
-	let dataLabel = [];
-	for (let i = 0; i <= dataPlayerOne.length; i+=1){
-		dataLabel.push(i + "");
-	}
+  let dataLabel = [];
+  for (let i = 0; i <= dataPlayerOne.length; i += 1) {
+    dataLabel.push(i + "");
+  }
 
   let config = {
     // Type of chart
     type: "line",
     data: {
-			// labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11,", "12", "13", "14", "15"],
-			labels: dataLabel,
+      // labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11,", "12", "13", "14", "15"],
+      labels: dataLabel,
       datasets: [
         {
           label: "Player One Wins",
@@ -161,47 +158,51 @@ function drawChart(data) {
           label: "Player Two Wins",
           data: dataPlayerTwo,
           fill: false,
-          borderColor: "rgba(0, 0, 206, 1)",   
+          borderColor: "rgba(0, 0, 206, 1)"
         }
       ]
-		},
-		options: {
-			responsive: true,
-			title: {
-				display: true,
-				text: 'Chart.js Line Chart'
-			},
-			tooltips: {
-				mode: 'index',
-				intersect: false,
-			},
-			hover: {
-				mode: 'nearest',
-				intersect: true
-			},
-			scales: {
-				xAxes: [{
-					display: true,
-					scaleLabel: {
-						display: true,
-						labelString: 'Number of plays'
-					}
-				}],
-				yAxes: [{
-					display: true,
-					ticks:{
-						suggestedMax: maxWins + 1
-					},
-					scaleLabel: {
-						display: true,
-						labelString: 'Wins'
-					}
-				}]
-			}
-		}
+    },
+    options: {
+      responsive: true,
+      title: {
+        display: true,
+        text: "Chart.js Line Chart"
+      },
+      tooltips: {
+        mode: "index",
+        intersect: false
+      },
+      hover: {
+        mode: "nearest",
+        intersect: true
+      },
+      scales: {
+        xAxes: [
+          {
+            display: true,
+            scaleLabel: {
+              display: true,
+              labelString: "Number of plays"
+            }
+          }
+        ],
+        yAxes: [
+          {
+            display: true,
+            ticks: {
+              suggestedMax: maxWins + 1
+            },
+            scaleLabel: {
+              display: true,
+              labelString: "Wins"
+            }
+          }
+        ]
+      }
+    }
   };
 
-	console.log(maxWins);
+  console.log(maxWins);
 
   let ctx = document.querySelector("#chart").getContext("2d");
   let simChart = new Chart(ctx, config);
