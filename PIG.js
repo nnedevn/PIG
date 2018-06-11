@@ -168,7 +168,7 @@ function drawChart(data) {
       },
       hover: {
         mode: "nearest",
-        intersect: true
+        intersect: false
       },
       scales: {
         xAxes: [
